@@ -2,14 +2,7 @@
  OpenInApp task
 
 
-rejkgjkjylkjkyjkltrjyktjrldkyjktljlkrjyklt
-
-
-tgklyltkyltklbkrytkblyklbklykbluklyklkbt
-tyktjykjtgkyjktjkyg
-bnbnhkybkytkbkkjmnykkkyj
-ynbkukyukujkubkjtkyjkyjtju
-bnymbntbytrmnybmnymnymbnmyn
+rejkgjkjylkjkyjkltrjyktjjjnmyn
 bnbymrnbmnymnubmyn
 yntmbytbmnymnbmymbnmutmumtnmbnumtnmumytb
 bmnymnumymumybummbnymtb
