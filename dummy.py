@@ -51,9 +51,7 @@ import os
 import time
 
 # %%
-dataset = pd.read_csv(
-    "data/synthetic-dataset/train.csv"
-)
+dataset = pd.read_csv("data/synthetic-dataset/train.csv")
 dataset.head()
 
 # %%
@@ -64,19 +62,9 @@ dataset
 
 # %%
 # create a new dataframe of english and hinglish column
-df = (
-    pd.DataFrame()
-)
-df[
-    "english"
-] = dataset[
-    "English"
-]
-df[
-    "hinglish"
-] = dataset[
-    "Hinglish"
-]
+df = pd.DataFrame()
+df["english"] = dataset["English"]
+df["hinglish"] = dataset["Hinglish"]
 df.head()
 
 # %%
@@ -95,36 +83,23 @@ remove_digits = str.maketrans(
 def preprocess_english_sentence(
     sentence,
 ):
-    sentence = (
-        sentence.lower()
-    )
+    sentence = sentence.lower()
     sentence = re.sub(
         "'",
         "",
         sentence,
     )
     sentence = "".join(
-        ch
-        for ch in sentence
-        if ch
-        not in exclude
+        ch for ch in sentence if ch not in exclude
     )
-    sentence = sentence.translate(
-        remove_digits
-    )
-    sentence = (
-        sentence.strip()
-    )
+    sentence = sentence.translate(remove_digits)
+    sentence = sentence.strip()
     sentence = re.sub(
         " +",
         " ",
         sentence,
     )
-    sentence = (
-        "<start> "
-        + sentence
-        + " <end>"
-    )
+    sentence = "<start> " + sentence + " <end>"
     return sentence
 
 
@@ -133,52 +108,31 @@ def preprocess_english_sentence(
 def preprocess_hinglish_sentence(
     sentence,
 ):
-    sentence = (
-        sentence.lower()
-    )
+    sentence = sentence.lower()
     sentence = re.sub(
         "'",
         "",
         sentence,
     )
     sentence = "".join(
-        ch
-        for ch in sentence
-        if ch
-        not in exclude
+        ch for ch in sentence if ch not in exclude
     )
-    sentence = sentence.translate(
-        remove_digits
-    )
-    sentence = (
-        sentence.strip()
-    )
+    sentence = sentence.translate(remove_digits)
+    sentence = sentence.strip()
     sentence = re.sub(
         " +",
         " ",
         sentence,
     )
-    sentence = (
-        "<start> "
-        + sentence
-        + " <end>"
-    )
+    sentence = "<start> " + sentence + " <end>"
     return sentence
 
 
 # %%
-df[
-    "english"
-] = df[
-    "english"
-].apply(
+df["english"] = df["english"].apply(
     preprocess_english_sentence
 )
-df[
-    "hinglish"
-] = df[
-    "hinglish"
-].apply(
+df["hinglish"] = df["hinglish"].apply(
     preprocess_hinglish_sentence
 )
 
@@ -202,12 +156,8 @@ def tokenizer(
         filters="",
         split=" ",
     )
-    tokenizer.fit_on_texts(
-        language
-    )
-    tensor = tokenizer.texts_to_sequences(
-        language
-    )
+    tokenizer.fit_on_texts(language)
+    tensor = tokenizer.texts_to_sequences(language)
     tensor = pad_sequences(
         tensor,
         padding="post",
@@ -223,19 +173,11 @@ def load_dataset():
     (
         input_tensor,
         inp_lang_tokenizer,
-    ) = tokenizer(
-        df[
-            "english"
-        ].values
-    )
+    ) = tokenizer(df["english"].values)
     (
         target_tensor,
         targ_lang_tokenizer,
-    ) = tokenizer(
-        df[
-            "hinglish"
-        ].values
-    )
+    ) = tokenizer(df["hinglish"].values)
     return (
         input_tensor,
         target_tensor,
@@ -250,21 +192,15 @@ def load_dataset():
     target_tensor,
     input_lang,
     target_lang,
-) = (
-    load_dataset()
-)
+) = load_dataset()
 
 # %%
 (
     max_length_targ,
     max_length_inp,
 ) = (
-    target_tensor.shape[
-        1
-    ],
-    input_tensor.shape[
-        1
-    ],
+    target_tensor.shape[1],
+    input_tensor.shape[1],
 )
 
 
@@ -282,121 +218,67 @@ def load_dataset():
 )
 
 print(
-    len(
-        input_tensor_train
-    ),
-    len(
-        target_tensor_train
-    ),
-    len(
-        input_tensor_val
-    ),
-    len(
-        target_tensor_val
-    ),
+    len(input_tensor_train),
+    len(target_tensor_train),
+    len(input_tensor_val),
+    len(target_tensor_val),
 )
 
 # %%
-BUFFER_SIZE = len(
-    input_tensor_train
-)
-BATCH_SIZE = (
-    64
-)
-N_BATCH = (
-    BUFFER_SIZE
-    // BATCH_SIZE
-)
-embedding_dim = (
-    256
-)
-units = (
-    1024
-)
-steps_per_epoch = (
-    len(
-        input_tensor_train
-    )
-    // BATCH_SIZE
-)
+BUFFER_SIZE = len(input_tensor_train)
+BATCH_SIZE = 64
+N_BATCH = BUFFER_SIZE // BATCH_SIZE
+embedding_dim = 256
+units = 1024
+steps_per_epoch = len(input_tensor_train) // BATCH_SIZE
 
-vocab_inp_size = len(
-    input_lang.word_index.keys()
-)
-vocab_tar_size = len(
-    target_lang.word_index.keys()
-)
+vocab_inp_size = len(input_lang.word_index.keys())
+vocab_tar_size = len(target_lang.word_index.keys())
 
 dataset = tf.data.Dataset.from_tensor_slices(
     (
         input_tensor_train,
         target_tensor_train,
     )
-).shuffle(
-    BUFFER_SIZE
-)
+).shuffle(BUFFER_SIZE)
 dataset = dataset.batch(
     BATCH_SIZE,
     drop_remainder=True,
 )
 
 # %%
-embeddings_index = (
-    dict()
-)
+embeddings_index = dict()
 f = open(
     "glove-2.txt",
     "r+",
 )
-for (
-    line
-) in f:
-    values = (
-        line.split()
-    )
-    word = values[
-        0
-    ]
+for line in f:
+    values = line.split()
+    word = values[0]
     coefs = np.asarray(
-        values[
-            1:
-        ],
+        values[1:],
         dtype="float32",
     )
-    embeddings_index[
-        word
-    ] = coefs
+    embeddings_index[word] = coefs
 f.close()
 
 embedding_matrix = np.zeros(
     (
-        vocab_inp_size
-        + 1,
+        vocab_inp_size + 1,
         300,
     )
 )
 for (
     word,
     i,
-) in (
-    input_lang.word_index.items()
-):
-    embedding_vector = embeddings_index.get(
-        word
-    )
-    if (
-        embedding_vector
-        is not None
-    ):
-        embedding_matrix[
-            i
-        ] = embedding_vector
+) in input_lang.word_index.items():
+    embedding_vector = embeddings_index.get(word)
+    if embedding_vector is not None:
+        embedding_matrix[i] = embedding_vector
 
 
 # %%
-class Encoder(
-    tf.keras.Model
-):
+class Encoder(tf.keras.Model):
     def __init__(
         self,
         vocab_size,
@@ -429,9 +311,7 @@ class Encoder(
         x,
         hidden,
     ):
-        x = self.embedding(
-            x
-        )
+        x = self.embedding(x)
         (
             output,
             state,
@@ -456,9 +336,7 @@ class Encoder(
 
 
 # %%
-class Decoder(
-    tf.keras.Model
-):
+class Decoder(tf.keras.Model):
     def __init__(
         self,
         vocab_size,
@@ -483,20 +361,12 @@ class Decoder(
             recurrent_activation="sigmoid",
             recurrent_initializer="glorot_uniform",
         )
-        self.fc = tf.keras.layers.Dense(
-            vocab_size
-        )
+        self.fc = tf.keras.layers.Dense(vocab_size)
 
         # used for attention
-        self.W1 = tf.keras.layers.Dense(
-            self.dec_units
-        )
-        self.W2 = tf.keras.layers.Dense(
-            self.dec_units
-        )
-        self.V = tf.keras.layers.Dense(
-            1
-        )
+        self.W1 = tf.keras.layers.Dense(self.dec_units)
+        self.W2 = tf.keras.layers.Dense(self.dec_units)
+        self.V = tf.keras.layers.Dense(1)
 
     def call(
         self,
@@ -511,12 +381,8 @@ class Decoder(
 
         score = self.V(
             tf.nn.tanh(
-                self.W1(
-                    enc_output
-                )
-                + self.W2(
-                    hidden_with_time_axis
-                )
+                self.W1(enc_output)
+                + self.W2(hidden_with_time_axis)
             )
         )
 
@@ -525,18 +391,13 @@ class Decoder(
             axis=1,
         )
 
-        context_vector = (
-            attention_weights
-            * enc_output
-        )
+        context_vector = attention_weights * enc_output
         context_vector = tf.reduce_sum(
             context_vector,
             axis=1,
         )
 
-        x = self.embedding(
-            x
-        )
+        x = self.embedding(x)
 
         x = tf.concat(
             [
@@ -552,23 +413,17 @@ class Decoder(
         (
             output,
             state,
-        ) = self.gru(
-            x
-        )
+        ) = self.gru(x)
 
         output = tf.reshape(
             output,
             (
                 -1,
-                output.shape[
-                    2
-                ],
+                output.shape[2],
             ),
         )
 
-        x = self.fc(
-            output
-        )
+        x = self.fc(output)
 
         return (
             x,
@@ -591,15 +446,13 @@ class Decoder(
 tf.keras.backend.clear_session()
 
 encoder = Encoder(
-    vocab_inp_size
-    + 1,
+    vocab_inp_size + 1,
     300,
     units,
     BATCH_SIZE,
 )
 decoder = Decoder(
-    vocab_tar_size
-    + 1,
+    vocab_tar_size + 1,
     embedding_dim,
     units,
     BATCH_SIZE,
@@ -607,12 +460,12 @@ decoder = Decoder(
 
 # %%
 
-optimizer = (
-    tf.keras.optimizers.Adam()
-)
-loss_object = tf.keras.losses.SparseCategoricalCrossentropy(
-    from_logits=True,
-    reduction="none",
+optimizer = tf.keras.optimizers.Adam()
+loss_object = (
+    tf.keras.losses.SparseCategoricalCrossentropy(
+        from_logits=True,
+        reduction="none",
+    )
 )
 
 
@@ -637,9 +490,7 @@ def loss_function(
     )
     loss_ *= mask
 
-    return tf.reduce_mean(
-        loss_
-    )
+    return tf.reduce_mean(loss_)
 
 
 # %%
@@ -662,9 +513,7 @@ def train_step(
     targ,
     enc_hidden,
 ):
-    loss = (
-        0
-    )
+    loss = 0
 
     with tf.GradientTape() as tape:
         (
@@ -676,28 +525,17 @@ def train_step(
         )
         encoder.get_layer(
             "embedding_layer_encoder"
-        ).set_weights(
-            [
-                embedding_matrix
-            ]
-        )
+        ).set_weights([embedding_matrix])
         dec_hidden = enc_hidden
 
         dec_input = tf.expand_dims(
-            [
-                target_lang.word_index[
-                    ""
-                ]
-            ]
-            * BATCH_SIZE,
+            [target_lang.word_index[""]] * BATCH_SIZE,
             1,
         )
 
         for t in range(
             1,
-            targ.shape[
-                1
-            ],
+            targ.shape[1],
         ):
             (
                 predictions,
@@ -725,14 +563,7 @@ def train_step(
                 1,
             )
 
-    batch_loss = (
-        loss
-        / int(
-            targ.shape[
-                1
-            ]
-        )
-    )
+    batch_loss = loss / int(targ.shape[1])
 
     variables = (
         encoder.trainable_variables
@@ -755,25 +586,13 @@ def train_step(
 
 
 # %%
-EPOCHS = (
-    15
-)
+EPOCHS = 15
 
-for (
-    epoch
-) in range(
-    EPOCHS
-):
-    start = (
-        time.time()
-    )
+for epoch in range(EPOCHS):
+    start = time.time()
 
-    enc_hidden = (
-        encoder.initialize_hidden_state()
-    )
-    total_loss = (
-        0
-    )
+    enc_hidden = encoder.initialize_hidden_state()
+    total_loss = 0
 
     for (
         batch,
@@ -781,11 +600,7 @@ for (
             inp,
             targ,
         ),
-    ) in enumerate(
-        dataset.take(
-            steps_per_epoch
-        )
-    ):
+    ) in enumerate(dataset.take(steps_per_epoch)):
         batch_loss = train_step(
             inp,
             targ,
@@ -793,25 +608,12 @@ for (
         )
         total_loss += batch_loss
 
-        if (
-            batch
-            % 100
-            == 0
-        ):
+        if batch % 100 == 0:
             print(
                 f"Epoch {epoch+1} Batch {batch} Loss {batch_loss.numpy():.4f}"
             )
-    if (
-        (
-            epoch
-            + 1
-        )
-        % 2
-        == 0
-    ):
-        checkpoint.save(
-            file_prefix=checkpoint_prefix
-        )
+    if (epoch + 1) % 2 == 0:
+        checkpoint.save(file_prefix=checkpoint_prefix)
 
     print(
         f"Epoch {epoch+1} Loss {total_loss/steps_per_epoch:.4f}"
@@ -822,22 +624,14 @@ for (
 
 # %%
 
-for (
-    epoch
-) in range(
+for epoch in range(
     EPOCHS,
     20,
 ):
-    start = (
-        time.time()
-    )
+    start = time.time()
 
-    enc_hidden = (
-        encoder.initialize_hidden_state()
-    )
-    total_loss = (
-        0
-    )
+    enc_hidden = encoder.initialize_hidden_state()
+    total_loss = 0
 
     for (
         batch,
@@ -845,11 +639,7 @@ for (
             inp,
             targ,
         ),
-    ) in enumerate(
-        dataset.take(
-            steps_per_epoch
-        )
-    ):
+    ) in enumerate(dataset.take(steps_per_epoch)):
         batch_loss = train_step(
             inp,
             targ,
@@ -857,26 +647,13 @@ for (
         )
         total_loss += batch_loss
 
-        if (
-            batch
-            % 100
-            == 0
-        ):
+        if batch % 100 == 0:
             print(
                 f"Epoch {epoch+1} Batch {batch} Loss {batch_loss.numpy():.4f}"
             )
     # saving (checkpoint) the model every 2 epochs
-    if (
-        (
-            epoch
-            + 1
-        )
-        % 2
-        == 0
-    ):
-        checkpoint.save(
-            file_prefix=checkpoint_prefix
-        )
+    if (epoch + 1) % 2 == 0:
+        checkpoint.save(file_prefix=checkpoint_prefix)
 
     print(
         f"Epoch {epoch+1} Loss {total_loss/steps_per_epoch:.4f}"
@@ -899,32 +676,19 @@ def evaluate(
         )
     )
 
-    sentence = preprocess(
-        sentence
-    )
+    sentence = preprocess(sentence)
 
     inputs = [
-        inp_lang.word_index[
-            i
-        ]
-        for i in sentence.split(
-            " "
-        )
+        inp_lang.word_index[i] for i in sentence.split(" ")
     ]
     inputs = tf.keras.preprocessing.sequence.pad_sequences(
-        [
-            inputs
-        ],
+        [inputs],
         maxlen=20,
         padding="post",
     )
-    inputs = tf.convert_to_tensor(
-        inputs
-    )
+    inputs = tf.convert_to_tensor(inputs)
 
-    result = (
-        ""
-    )
+    result = ""
 
     hidden = [
         tf.zeros(
@@ -944,19 +708,11 @@ def evaluate(
 
     dec_hidden = enc_hidden
     dec_input = tf.expand_dims(
-        [
-            targ_lang.word_index[
-                ""
-            ]
-        ],
+        [targ_lang.word_index[""]],
         0,
     )
 
-    for (
-        t
-    ) in range(
-        max_length_targ
-    ):
+    for t in range(max_length_targ):
         (
             predictions,
             dec_hidden,
@@ -969,34 +725,14 @@ def evaluate(
         # storing the attention weights to plot later on
         attention_weights = tf.reshape(
             attention_weights,
-            (
-                -1,
-            ),
+            (-1,),
         )
-        attention_plot[
-            t
-        ] = (
-            attention_weights.numpy()
-        )
-        predicted_id = tf.argmax(
-            predictions[
-                0
-            ]
-        ).numpy()
+        attention_plot[t] = attention_weights.numpy()
+        predicted_id = tf.argmax(predictions[0]).numpy()
 
-        result += (
-            targ_lang.index_word[
-                predicted_id
-            ]
-            + " "
-        )
+        result += targ_lang.index_word[predicted_id] + " "
 
-        if (
-            targ_lang.index_word[
-                predicted_id
-            ]
-            == ""
-        ):
+        if targ_lang.index_word[predicted_id] == "":
             return (
                 result,
                 attention_plot,
@@ -1004,9 +740,7 @@ def evaluate(
 
         # the predicted ID is fed back into the model
         dec_input = tf.expand_dims(
-            [
-                predicted_id
-            ],
+            [predicted_id],
             0,
         )
 
@@ -1018,7 +752,9 @@ def evaluate(
 
 # %%
 
-input_sentence = "please ensure that you use the appropriate form "
+input_sentence = (
+    "please ensure that you use the appropriate form "
+)
 print(
     "Input sentence in english : ",
     input_sentence,
@@ -1026,9 +762,7 @@ print(
 (
     predicted_output,
     attention_plot,
-) = evaluate(
-    input_sentence
-)
+) = evaluate(input_sentence)
 print(
     "Predicted sentence in hindi : ",
     predicted_output,
@@ -1036,7 +770,9 @@ print(
 
 # %%
 
-input_sentence = "and do something with it to change the world "
+input_sentence = (
+    "and do something with it to change the world "
+)
 print(
     "Input sentence in english : ",
     input_sentence,
@@ -1044,9 +780,7 @@ print(
 (
     predicted_output,
     attention_plot,
-) = evaluate(
-    input_sentence
-)
+) = evaluate(input_sentence)
 print(
     "Predicted sentence in hindi : ",
     predicted_output,
