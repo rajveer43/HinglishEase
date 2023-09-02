@@ -12,6 +12,14 @@ To keep the project size manageable, we have provided a link to download the Glo
 
 Please make sure to place the downloaded GloVe embeddings in the appropriate directory before running the code.
 
+## Handling Large Files with Git LFS
+
+This project utilizes Git LFS (Large File Storage) to manage and version control large files efficiently. In particular, it uses Git LFS to store and track the large files, such as pre-trained model weights, embeddings, and datasets, which are essential for the project.
+
+When cloning or working with this repository, it's important to have Git LFS installed on your system. You can download and install Git LFS by following the instructions [here](link_to_git_lfs_installation).
+
+Please note that large files, such as GloVe embeddings and pre-trained model weights, are stored using Git LFS to ensure smooth collaboration and version control.
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Algorithm](#algorithm)
