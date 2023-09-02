@@ -28,13 +28,13 @@ Please note that large files, such as GloVe embeddings and pre-trained model wei
 5. [Results](#results)
 6. [Sample Output](#sample-output)
 
-## 1. Introduction
+## Introduction
 
 Hinglish is a hybrid language that combines elements of Hindi and English. This model aims to translate English sentences into Hinglish while maintaining simplicity and ease of understanding. It is designed to make the translated text sound natural, like it's spoken by a casual Hindi speaker.
 
 ![Model_Architecture](images/model.jpg)
 
-## 2. Algorithm
+## Algorithm
 
 The algorithm used in this model follows these steps:
 
@@ -227,7 +227,7 @@ predicted_output, attention_plot = evaluate(input_sentence)
 ```
 
 
-## 3. Usage
+## Usage
 
 To use the Hinglish translation model, follow these steps:
 
@@ -248,7 +248,7 @@ To use the Hinglish translation model, follow these steps:
    
 5. The script will output the corresponding Hinglish Hindi and English Both translation.
 
-## 4. Evaluation
+## Evaluation
 
 The model will be evaluated based on the following criteria:
 
@@ -264,7 +264,7 @@ Understandability: Is the translated text clear and easy to understand for non-n
 
 **NO, the translated text is not clear**
 
-## 5. Results
+## Results
 
 The model aims to produce Hinglish translations that are accurate, fluent, and highly understandable. but it is still work in progress more time for this task might give better results
 
