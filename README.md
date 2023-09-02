@@ -4,6 +4,14 @@ This repository contains a Python-based Hinglish translation model that can conv
 
 The Jupyter notebooks saved as pdf to see the output. the code is saved in `HinglishEase_Trained_Hinglish.py` to see the code quality and coding standards. 
 
+### GloVe Word Embeddings
+
+This project utilizes GloVe (Global Vectors for Word Representation) word embeddings for enhanced language processing. GloVe is a widely used pre-trained word embedding model that represents words as vectors in a continuous space. These embeddings capture semantic relationships between words and contribute to the model's ability to understand and translate text effectively.
+
+To keep the project size manageable, we have provided a link to download the GloVe embeddings used in this project. You can download them from [here](https://www.kaggle.com/datasets/thanakomsn/glove6b300dtxt).
+
+Please make sure to place the downloaded GloVe embeddings in the appropriate directory before running the code.
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Algorithm](#algorithm)
@@ -15,6 +23,8 @@ The Jupyter notebooks saved as pdf to see the output. the code is saved in `Hing
 ## 1. Introduction
 
 Hinglish is a hybrid language that combines elements of Hindi and English. This model aims to translate English sentences into Hinglish while maintaining simplicity and ease of understanding. It is designed to make the translated text sound natural, like it's spoken by a casual Hindi speaker.
+
+![Model_Architecture](images/model.jpg)
 
 ## 2. Algorithm
 
