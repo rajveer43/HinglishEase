@@ -241,9 +241,9 @@ To use the Hinglish translation model, follow these steps:
    ```bash
    cd HINGLISHEase
 
-4. Run the translation script with your input sentence using Jypiter Notebook
+4. Run the translation script with your input sentence using Jupyter Notebook
    ```bash
-   HinglishEase_trained_hinglish.ipynb`:
+   HinglishEase_trained_hinglish.ipynb`
 
    
 5. The script will output the corresponding Hinglish Hindi and English Both translation.
