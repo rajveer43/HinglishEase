@@ -216,33 +216,37 @@ To use the Hinglish translation model, follow these steps:
    ```bash
    git clone https://github.com/yourusername/hinglishease.git
 
-3. Navigate to the project directory:
+2. Navigate to the project directory:
 
    ```bash
-   cd hinglish-translation
+   cd HINGLISHEase
 
-3. Install the required dependencies (you may need to create a virtual environment):
-
+4. Run the translation script with your input sentence using Jypiter Notebook
    ```bash
-   pip install -r requirements.txt
-4. Run the translation script with your input sentence:
+   HinglishEase_trained_hinglish.ipynb`:
 
-   ```bash
-   python translate.py "Your English input sentence here."
    
-5. The script will output the corresponding Hinglish translation.
+5. The script will output the corresponding Hinglish Hindi and English Both translation.
 
 ## 4. Evaluation
 
 The model will be evaluated based on the following criteria:
 
 Accuracy: How well does the generated Hinglish text convey the meaning of the original English sentence while keeping it simple and easy to understand?
+
+**Accaracy is par. the model does not work appropriately. more diversed dataset could have been used and test and validation set and hyperparamaters tuning must be there**
+
 Fluency: Does the translated text sound natural, like it's spoken by a casual Hindi speaker?
+
+**No, It does not work well**
+
 Understandability: Is the translated text clear and easy to understand for non-native Hindi speakers?
+
+**NO, the translated text is not clear**
 
 ## 5. Results
 
-The results of the model's performance will be assessed based on the evaluation criteria mentioned above. The model aims to produce Hinglish translations that are accurate, fluent, and highly understandable.
+The model aims to produce Hinglish translations that are accurate, fluent, and highly understandable. but it is still work in progress more time for this task might give better results
 
 ## Sample Output
 
