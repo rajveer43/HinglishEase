@@ -17,10 +17,145 @@ Hinglish is a hybrid language that combines elements of Hindi and English. This 
 ## 2. Algorithm
 
 The algorithm used in this model follows these steps:
+```python
+# Import necessary libraries and set up the environment
+import libraries
 
-1. Tokenization: The input English sentence is tokenized into individual words.
-2. Translation: Each English word is translated into its Hinglish equivalent using a predefined mapping of words and phrases. Some words are retained in English to enhance understandability.
-3. Post-processing: The translated words are concatenated to form the final Hinglish sentence. Punctuation and spacing are adjusted for readability.
+# Mount Google Drive to access data
+mount_google_drive()
+
+# Load and preprocess the dataset
+load_and_preprocess_dataset()
+
+# Define the tokenization function
+function tokenize(lang):
+    initialize lang_tokenizer
+    fit lang_tokenizer on lang
+    convert lang sentences to sequences of tokens
+    pad sequences to a fixed length
+    return tensor, lang_tokenizer
+
+# Load and preprocess the dataset
+input_tensor, target_tensor, inp_lang, targ_lang = load_dataset()
+
+# Define model hyperparameters
+BUFFER_SIZE = length of input_tensor_train
+BATCH_SIZE = 32
+embedding_dim = 256
+units = 1024
+
+# Create a TensorFlow dataset
+create_dataset()
+
+# Load pre-trained word embeddings (GloVe)
+load_pretrained_word_embeddings()
+
+# Create an embedding matrix
+create_embedding_matrix()
+
+# Define the Encoder class
+class Encoder:
+    initialize the encoder layers
+
+    function call(x, hidden):
+        embed input sequence
+        pass through GRU layer
+        return encoder outputs and state
+
+    function initialize_hidden_state():
+        initialize hidden state to zeros
+
+# Define the Decoder class
+class Decoder:
+    initialize the decoder layers
+
+    function call(x, hidden, enc_output):
+        calculate attention weights
+        calculate context vector
+        embed input sequence
+        concatenate context vector and embedded input
+        pass through GRU layer
+        pass through a fully connected layer
+        return decoder output, state, and attention weights
+
+    function initialize_hidden_state():
+        initialize hidden state to zeros
+
+# Create encoder and decoder models
+encoder = Encoder(vocab_inp_size + 1, 300, units, BATCH_SIZE)
+decoder = Decoder(vocab_tar_size + 1, embedding_dim, units, BATCH_SIZE)
+
+# Define optimization and loss functions
+optimizer = Adam optimizer
+loss_object = SparseCategoricalCrossentropy loss
+
+# Define the loss function
+function loss_function(real, pred):
+    apply masking to ignore padding tokens
+    calculate loss
+    return mean loss
+
+# Define training checkpoints
+create_training_checkpoints()
+
+# Define the training step
+function train_step(inp, targ, enc_hidden):
+    initialize loss
+    use gradient tape for automatic differentiation
+    calculate encoder output and hidden state
+    update encoder embedding layer weights
+    initialize decoder hidden state
+    initialize decoder input
+    loop over target sequence tokens
+        generate predictions
+        calculate loss for each step
+        update decoder input
+    calculate batch loss
+    compute gradients and apply updates
+    return batch loss
+
+# Training loop
+EPOCHS = 100
+for epoch in range(EPOCHS):
+    initialize encoder hidden state
+    initialize total loss
+    loop over dataset batches
+        perform a training step
+        accumulate batch loss
+        print batch loss at regular intervals
+    save checkpoint every 2 epochs
+    print epoch loss and time taken
+
+# Define the evaluation function
+function evaluate(sentence):
+    preprocess input sentence
+    convert input sentence to tensor
+    initialize result and hidden state
+    encode input sentence
+    initialize decoder hidden state and input
+    loop over target sequence length
+        generate predictions, hidden state, and attention weights
+        accumulate predicted tokens
+        if end token is predicted, return result
+    return result and attention plot
+
+# Perform evaluations
+input_sentence = "please ensure that you use the appropriate form"
+predicted_output, attention_plot = evaluate(input_sentence)
+
+input_sentence = "and do something with it to change the world"
+predicted_output, attention_plot = evaluate(input_sentence)
+
+input_sentence = "So even if its a big video I will clearly mention all the products"
+predicted_output, attention_plot = evaluate(input_sentence)
+
+input_sentence = "I was waiting for my bag"
+predicted_output, attention_plot = evaluate(input_sentence)
+
+input_sentence = "definitely share your feedback in the comment section"
+predicted_output, attention_plot = evaluate(input_sentence)
+```
+
 
 ## 3. Usage
 
