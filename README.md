@@ -1,6 +1,8 @@
-# Hinglish Translation Model - HINGLISHEase
+# Task - 3 Hinglish Translation Model - HINGLISHEase
 
 This repository contains a Python-based Hinglish translation model that can convert English sentences into Hinglish, making them easy to understand for non-native Hindi speakers. This README file will provide detailed information on how to run the model, evaluate its performance, and understand the algorithm used.
+
+The Jupyter notebooks saved as pdf to see the output. the code is saved in `HinglishEase_Trained_Hinglish.py` to see the code quality and coding standards. 
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -257,3 +259,8 @@ Output: "मझु ेसि र्फ ३० minute का demo मि ला �
 
 This README provides an overview of the Hinglish translation model. For further details on the code implementation, please refer to the Python code in the repository.
 If you have any questions or need assistance, feel free to contact the project maintainers.
+
+## contact details
+
+rajveer.rathod1301@gmail.com
++91 9265732511
