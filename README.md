@@ -32,7 +32,7 @@ Please note that large files, such as GloVe embeddings and pre-trained model wei
 
 Hinglish is a hybrid language that combines elements of Hindi and English. This model aims to translate English sentences into Hinglish while maintaining simplicity and ease of understanding. It is designed to make the translated text sound natural, like it's spoken by a casual Hindi speaker.
 
-![Model_Architecture](images/model.jpg)
+![Model_Architecture](images/model_1.jpg)
 
 ## Algorithm
 
