@@ -38,53 +38,39 @@ Hinglish is a hybrid language that combines elements of Hindi and English. This 
 
 The algorithm used in this model follows these steps:
 
-### English Algorithm
+### Sequence-to-Sequence Model with Attention
 
-1. **Data Preprocessing**:
-   - Load English and Hindi sentence pairs from a dataset.
-   - Preprocess both languages by removing punctuation, digits, and adding special tokens like "<start>" and "<end>".
+This architecture represents a sequence-to-sequence model with attention mechanisms, which is commonly used for tasks like machine translation.
 
-2. **Tokenization**:
-   - Tokenize the preprocessed sentences into numerical sequences for both languages.
-   - Pad sequences to a fixed length for model input.
+#### Encoder
 
-3. **Model Architecture**:
-   - Define an Encoder-Decoder model for translation.
-   - The Encoder processes the input English sequence and produces an encoded representation.
-   - The Decoder generates the output Hindi sequence while paying attention to the relevant parts of the input.
+- Input Sequence: English Sentences
+- Encoder Embedding Layer: Converts words into continuous vectors
+- Encoder GRU Layer: Processes input sequences, produces encoder hidden states
 
-4. **Training**:
-   - Define loss functions and optimization methods.
-   - Implement a training loop for a fixed number of epochs.
-   - In each epoch, iterate through the dataset in batches:
-     - Pass the input through the Encoder.
-     - Initialize the Decoder with the encoded representation.
-     - Generate predictions step by step for the target sequence.
-     - Compute the loss and update model weights using backpropagation.
-   - Save checkpoints at regular intervals.
+#### Decoder
 
-5. **Evaluation**:
-   - Create an evaluation function to translate English sentences to Hindi.
-   - Preprocess the input sentence, encode it with the Encoder.
-   - Initialize the Decoder with the encoded representation.
-   - Generate Hindi words step by step, paying attention to relevant parts of the English sentence.
-   - Stop when the "<end>" token is generated or a maximum length is reached.
+- Target Sequence: Hindi Sentences
+- Decoder Embedding Layer: Converts words into continuous vectors
+- Attention Mechanism: Calculates attention weights
+- Context Vector: Weighted sum of encoder hidden states
+- Decoder GRU Layer: Processes context vectors and previous target tokens
+- Output Layer: Generates Hindi sentence tokens
 
-6. **Example Translations**:
-   - Use the evaluation function to translate sample English sentences into Hindi.
-   - Display the translated sentences.
+#### Training
 
-7. **Checkpoint Saving**:
-   - Periodically save model checkpoints during training to resume or fine-tune training later.
+- Optimizer: Adam
+- Loss Function: Sparse Categorical Crossentropy
+- Training Loop: Epochs, Batches
+- Checkpoints: Saved periodically
 
-8. **Word Embeddings**:
-   - Utilize pre-trained word embeddings (GloVe) for the English language to enhance model performance.
+#### Inference
 
-9. **Hyperparameters**:
-   - Define model hyperparameters such as batch size, embedding dimensions, and learning rates.
+- Evaluate function: Takes input sentence, preprocesses it, and generates a Hindi sentence
+- Uses trained encoder and decoder with attention mechanisms
 
-10. **Training Progress**:
-    - Print training loss for each batch and epoch to monitor training progress.
+This architecture is designed to map English sentences to their corresponding Hindi translations while paying attention to relevant parts of the input sequence.
+
 
 ### Pesudo code
 ```python
