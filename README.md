@@ -1,6 +1,6 @@
 # Task - 3 Hinglish Translation Model - HINGLISHEase
 
-This repository contains a Python-based Hinglish translation model that can convert English sentences into Hinglish, making them easy to understand for non-native Hindi speakers. This README file will provide detailed information on how to run the model, evaluate its performance, and understand the algorithm used.
+This repository contains a Python-based Hinglish translation model that can convert English sentences into Hinglish, making them easy to understand for non-native Hindi speakers. This README file will provide detailed information on how to run the model, evaluate its performance, and understand the algorithm used...
 
 The Jupyter notebooks saved as pdf to see the output. the code is saved in `HinglishEase_Trained_Hinglish.py` to see the code quality and coding standards. 
 
