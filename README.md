@@ -264,7 +264,3 @@ Output: "मझु ेसि र्फ ३० minute का demo मि ला �
 This README provides an overview of the Hinglish translation model. For further details on the code implementation, please refer to the Python code in the repository.
 If you have any questions or need assistance, feel free to contact the project maintainers.
 
-## contact details
-
-rajveer.rathod1301@gmail.com
-+91 9265732511
